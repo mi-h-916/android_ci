@@ -15,6 +15,8 @@ import com.example.androidci.ui.theme.AndroidCITheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val list = listOf<String>()
+        list.first()
         setContent {
             AndroidCITheme {
                 // A surface container using the 'background' color from the theme
