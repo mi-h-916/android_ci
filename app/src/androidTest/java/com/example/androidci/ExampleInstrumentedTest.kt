@@ -21,4 +21,9 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.androidci", appContext.packageName)
     }
+
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(3, 2 + 2)
+    }
 }
