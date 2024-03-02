@@ -66,4 +66,7 @@ jobs:
 
       # テスト
       - name: Test with Gradle
-        run: ./gradlew test --stacktrace
+        run: |
+          ./gradlew app:clean
+          ./gradlew app:connectedAndroidTest
+          ./gradlew test --stacktrace
