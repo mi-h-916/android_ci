@@ -1,12 +1,12 @@
 on:
-push:
-  paths-ignore:
-    - './*.md'
-    - '**/*.md'
-    - './Makefile'
-    - './scripts/*'
-    - './.gitignore'
-    - '**/.gitignore'
+  push:
+    paths-ignore:
+      - './*.md'
+      - '**/*.md'
+      - './Makefile'
+      - './scripts/*'
+      - './.gitignore'
+      - '**/.gitignore'
 jobs:
   build:
     runs-on: ubuntu-latest
