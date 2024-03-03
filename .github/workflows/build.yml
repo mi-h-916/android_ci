@@ -16,13 +16,10 @@ jobs:
         run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
         id: extract_branch
 
-      - name: Print branch name
-        env:
-          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
-        run: echo $BRANCH_NAME
       - name: post message to Slack
         uses: tokorom/action-slack-incoming-webhook@master
         env:
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
           text: "Build ${{ BRANCH_NAME }} ..."
