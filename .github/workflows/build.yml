@@ -26,6 +26,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
+
       # チェックアウト
       - uses: actions/checkout@v4
 
@@ -64,7 +69,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-          text: "CI完了"
+          text: "Build Success ${{ steps.extract_branch.outputs.branch }} !"
 
       - name: post message to Slack
         if: failure()
@@ -72,4 +77,4 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-          text: "CIエラー"
+          text:  "Build Error ${{ steps.extract_branch.outputs.branch }} !"
