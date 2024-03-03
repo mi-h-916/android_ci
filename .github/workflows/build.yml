@@ -25,7 +25,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-          text: echo $BRANCH_NAME
+          text: "Build ${{ BRANCH_NAME }} ..."
   build:
     runs-on: ubuntu-latest
     steps:
