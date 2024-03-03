@@ -22,7 +22,7 @@ jobs:
           BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-          text: "Build ${{ BRANCH_NAME }} ..."
+          text: "Build ${{ steps.extract_branch.outputs.branch }} ..."
   build:
     runs-on: ubuntu-latest
     steps:
