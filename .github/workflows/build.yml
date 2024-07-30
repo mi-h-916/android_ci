@@ -62,7 +62,7 @@ jobs:
           INCOMING_UPLOAD_URL: ${{ secrets.SLACK_FILE_UPLOAD }}
         run: |
           ls
-          curl -F file=@./test.txt -F channels=#android_ci -H "Authorization: Bearer ${INCOMING_UPLOAD_URL}" https://slack.com/api/files.upload
+          curl -F file=@./test.txt -F channels=#android_ci -H "Authorization: Bearer ${{ INCOMING_UPLOAD_URL }}" https://slack.com/api/files.upload
           ls
 
       - name: post message to Slack
