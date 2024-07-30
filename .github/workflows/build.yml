@@ -64,8 +64,7 @@ jobs:
           ls
           touch test.txt
           ls
-          RES = $(curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt)
-          echo "$RES"
+          curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt
           ls
       - name: post message to Slack
         if: success()
