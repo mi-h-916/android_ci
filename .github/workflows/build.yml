@@ -66,9 +66,7 @@ jobs:
           ls
           JSON_RESPONSE=$(curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt)
           echo $JSON_RESPONSE
-          JSON_RESPONSE_STR="${JSON_RESPONSE}"
-          JSON_RESPONSES=(${JSON_RESPONSE_STR//,/ })
-          echo $JSON_RESPONSES
+          awk -F'[“]’ ‘/”upload_url”/{print $4}’ $JSON_RESPONSE
           curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt
           ls
       - name: post message to Slack
