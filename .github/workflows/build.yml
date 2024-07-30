@@ -60,7 +60,7 @@ jobs:
       - name: Run Compile
         run: |
           ls
-          touch.txt
+          touch test.txt
           ls
 
       - name: post message to Slack
