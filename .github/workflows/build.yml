@@ -65,8 +65,7 @@ jobs:
           touch test.txt
           ls
           add1= add2=
-          read add1 add2 < <(curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt) | \
-  > jq -r '.results[]|[.upload_url,.file_id]|@tsv')
+          read add1 add2 < <(curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt) | \ > jq -r '.results[]|[.upload_url,.file_id]|@tsv')
           ls
           echo "$add1-$add2"
 
