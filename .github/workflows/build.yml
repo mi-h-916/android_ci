@@ -73,7 +73,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         with:
-          text: "Build Successs ${{ steps.extract_branch.outputs.branch }} !"
+          text: "Build Successss ${{ steps.extract_branch.outputs.branch }} !"
 
       - name: post message to Slack
         if: failure()
