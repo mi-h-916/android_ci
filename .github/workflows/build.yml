@@ -64,7 +64,7 @@ jobs:
           ls
           touch test.txt
           ls
-          curl -F file=@./test.txt -F channels=#android_ci -H "Authorization: Bearer ${INCOMING_UPLOAD_URL}" https://slack.com/api/files.upload
+          curl  https://slack.com/api/files.getUploadURLExternal -F token='${INCOMING_UPLOAD_URL}'  -F length=20000 -F filename=test.txt
           ls
 
       - name: post message to Slack
