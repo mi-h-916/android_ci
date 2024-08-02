@@ -65,6 +65,9 @@ jobs:
           touch test.txt
           ls
           curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt -o response
+          cat response
+          RESPONSE_OBJ=$(curl https://slack.com/api/files.getUploadURLExternal -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F filename=test.txt)
+          object=$(printf %b "$RESPONSE_OBJ" | tr -d '{}' | sed 's/,/\n/g')
           ls
       - name: post message to Slack
         if: success()
