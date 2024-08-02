@@ -69,7 +69,7 @@ jobs:
           object=$(printf %b "$RESPONSE_OBJ" | tr -d '{}' | sed 's/,/\n/g')
           echo $object
           value=$(printf %s "$object" | sed -n 's/^"upload_url"://p')
-          echo value
+          echo $value
           ls
       - name: post message to Slack
         if: success()
