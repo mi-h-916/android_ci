@@ -74,7 +74,7 @@ jobs:
           ls
           echo $value | sed 's/"//g'
           ss=$(echo $value | sed 's/"//g')
-          curl -X POST $ss token="${INCOMING_UPLOAD_URL}" --data-binary @./test.txt
+          curl -X POST $ss --data-binary @./test.txt
           curl -X POST -H "Authorization: Bearer ${INCOMING_UPLOAD_URL}" -H "Content-Type: application/json" -d '{ "files": [{"id":"${fileId}", "title":"投稿時のタイトル"}], "channel_id": "C06M6SM83B9" }' https://slack.com/api/files.completeUploadExternal
       - name: post message to Slack
         if: success()
