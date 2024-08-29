@@ -72,7 +72,9 @@ jobs:
           fileId=$(printf %s "$object" | sed -n 's/^"file_id"://p')
           echo $value
           ls
-          echo $value sed 's/"//g'
+          echo $value sed | 's/"//g'
+          valueS = $value sed | 's/"//g'
+          echo $valueS
 #          curl -XPOST $value -F token="${INCOMING_UPLOAD_URL}" -F length=20000 -F @./filename=test.txt
 #          curl -XPOST -H "Authorization: Bearer ${INCOMING_UPLOAD_URL}" -H "Content-Type: application/json" -d '{ "files": [{"id":"${fileId}", "title":"投稿時のタイトル"}], "channel_id": "C06M6SM83B9" }' https://slack.com/api/files.completeUploadExternal
       - name: post message to Slack
