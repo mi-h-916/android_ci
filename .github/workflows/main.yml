@@ -19,6 +19,7 @@ jobs:
       run: |
         echo "target: ${{ github.event.inputs.target }}"
         echo "message: ${{ github.event.inputs }}"
+        echo "ref ${{ github.ref_name }}"
     - name: Deploy (use environemt secrets)
       run: |
         echo "sss"
