@@ -67,7 +67,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         run: |
-          sh "curl -X POST --data-urlencode 'payload={\"channel"\: \"#android_ci"\, \"username"\: \"Jenkins"\, \"text"\: \"build success?"\' ${INCOMING_WEBHOOK_URL}"
+          echo "OK"
       - name: post message to Slack
         if: failure()
         env:
