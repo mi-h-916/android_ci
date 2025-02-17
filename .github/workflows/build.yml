@@ -67,4 +67,4 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
         run: |
-          sh "curl -X POST --data-urlencode 'payload={\"channel"\: \"#android_ci"\, \"username"\: \"Jenkins"\, \"text"\: \"build success?"\, \"icon_emoji"\: \":bow:"\' ${INCOMING_WEBHOOK_URL}"
+          sh "curl -X POST --data-urlencode 'payload={\"channel"\: \"#android_ci"\, \"username"\: \"Jenkins"\, \"text"\: \"build success?"\, \"icon_emoji"\: \":bow:"\' $INCOMING_WEBHOOK_URL"
