@@ -1,0 +1,76 @@
+on:
+  push:
+    paths-ignore:
+      - './*.md'
+      - '**/*.md'
+      - './Makefile'
+      - './scripts/*'
+      - './.gitignore'
+      - '**/.gitignore'
+jobs:
+  slack_notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
+
+      - name: post message to Slack
+        uses: tokorom/action-slack-incoming-webhook@master
+        env:
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          text: "Build ${{ steps.extract_branch.outputs.branch }} ..."
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
+
+      # チェックアウト
+      - uses: actions/checkout@v4
+
+      # Gradleラッパースクリプトが正しいものか確認
+      - uses: gradle/wrapper-validation-action@v1
+
+      # JDKのセットアップ
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: microsoft
+          java-version: 17
+
+      # Gradleのキャッシュ復元
+      - uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # 依存関係の出力
+      - name: Displays the Android dependencies of the project
+        run: ./gradlew androidDependencies
+
+      # コンパイル
+      - name: Run Compile
+        env:
+          INCOMING_UPLOAD_URL: ${{ secrets.SLACK_FILE_UPLOAD }}
+        run: |
+          ls
+      - name: post message to Slack
+        if: success()
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          curl -X POST -H "Content-type: application/json"  --data "{\"text\":\"Success!\", \"icon_emoji\":\":bow:\"}" ${INCOMING_WEBHOOK_URL}
+      - name: post message to Slack fail
+        if: failure()
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          curl -X POST -H "Content-type: application/json"  --data "{\"text\":\"Failed\", \"icon_emoji\":\":bow:\"}" ${INCOMING_WEBHOOK_URL}
